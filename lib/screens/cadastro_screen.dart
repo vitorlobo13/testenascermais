@@ -198,7 +198,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                     );
                     // INSERE NO BANCO E PEGA O ID GERADO
                     int idGerado = await DatabaseHelper().insertGestante(novaGestante);
-                    novaGestante.id = idGerado;
+                    novaGestante.id = idGerado.toString();
                     if (!mounted) return;
            
                     Navigator.pop(context, novaGestante);
