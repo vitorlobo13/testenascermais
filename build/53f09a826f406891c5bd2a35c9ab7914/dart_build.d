@@ -1,0 +1,1 @@
+ D:\\Projetos\\Nascermais\\Meuteste\\main\\build\\53f09a826f406891c5bd2a35c9ab7914\\dart_build_result.json:  D:\\Flutter\\flutter\\bin\\cache\\dart-sdk\\version D:\\Projetos\\Nascermais\\Meuteste\\main\\.dart_tool\\package_config.json D:\\Projetos\\Nascermais\\Meuteste\\main\\pubspec.yaml d:\\projetos\\nascermais\\meuteste\\main\\.dart_tool\\package_config.json
