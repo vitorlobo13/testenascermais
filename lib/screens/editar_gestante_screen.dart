@@ -76,10 +76,19 @@ class _EditarGestanteScreenState extends State<EditarGestanteScreen> {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.pink.shade50,
-                      backgroundImage: imageProvider,
-                      child: imageProvider == null
-                          ? const Icon(Icons.camera_alt, size: 40, color: Colors.pink)
-                          : null,
+                      child: ClipOval(
+                        child: imageProvider != null
+                          ? Image(
+                              image: imageProvider,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.camera_alt, size: 40, color: Colors.pink);
+                              },
+                            )
+                          : const Icon(Icons.camera_alt, size: 40, color: Colors.pink),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     const Text('Alterar Foto', style: TextStyle(color: Colors.grey, fontSize: 12)),

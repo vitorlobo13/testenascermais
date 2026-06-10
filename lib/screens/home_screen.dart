@@ -176,13 +176,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                   leading: CircleAvatar(
                                     radius: 25,
                                     backgroundColor: isArquivada ? Colors.grey.shade400 : Colors.pink.shade100,
-                                    backgroundImage: imageProvider,
-                                    child: imageProvider == null
-                                        ? Text(
-                                            g.nome[0].toUpperCase(),
-                                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-                                          )
-                                        : null,
+                                    child: ClipOval(
+                                      child: imageProvider != null
+                                          ? Image(
+                                              image: imageProvider,
+                                              width: 50,
+                                              height: 50,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error, stackTrace) {
+                                                return Text(
+                                                  g.nome[0].toUpperCase(),
+                                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                                                );
+                                              },
+                                            )
+                                          : Text(
+                                              g.nome[0].toUpperCase(),
+                                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                                            ),
+                                    ),
                                   ),
                                   title: Text(
                                     g.nome, 

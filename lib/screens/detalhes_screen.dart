@@ -114,10 +114,19 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
                 CircleAvatar(
                   radius: 40,
                   backgroundColor: Colors.white,
-                  backgroundImage: imageProvider,
-                  child: imageProvider == null
-                    ? const Icon(Icons.person, size: 40, color: Colors.pink) 
-                    : null,
+                  child: ClipOval(
+                    child: imageProvider != null
+                      ? Image(
+                          image: imageProvider,
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.person, size: 40, color: Colors.pink);
+                          },
+                        )
+                      : const Icon(Icons.person, size: 40, color: Colors.pink),
+                  ),
                 ),
                 //INFORMAÇÕES DA GESTANTE QUE FICA AO LADO DA FOTO
                 const SizedBox(width: 20),
