@@ -29,10 +29,12 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
       GestantesStateScope.of(context, listen: false).atualizarGestante(widget.gestante);
     }
   }
-  
-  @override
+    @override
   Widget build(BuildContext context) {
     final provider = GestantesStateScope.of(context, listen: false);
+    final imageProvider = (widget.gestante.fotoPath != null && widget.gestante.fotoPath!.isNotEmpty)
+        ? _buildImageProvider(widget.gestante.fotoPath!)
+        : null;
     return Scaffold(
       //CABEÇALHO
       appBar: AppBar(
@@ -57,6 +59,7 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
               mounted: mounted,
             ),
           ),
+
 
           // BOTÃO PARA IMPORTAR CARTÕES DE OUTRA GESTANTE
           IconButton(
@@ -111,10 +114,8 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
                 CircleAvatar(
                   radius: 40,
                   backgroundColor: Colors.white,
-                  backgroundImage: widget.gestante.fotoPath != null 
-                      ? _buildImageProvider(widget.gestante.fotoPath!)
-                      : null,
-                  child: widget.gestante.fotoPath == null 
+                  backgroundImage: imageProvider,
+                  child: imageProvider == null
                     ? const Icon(Icons.person, size: 40, color: Colors.pink) 
                     : null,
                 ),

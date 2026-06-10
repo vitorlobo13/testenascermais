@@ -31,6 +31,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final imageProvider = (_fotoPath != null && _fotoPath!.isNotEmpty)
+        ? _buildImageProvider(_fotoPath!)
+        : null;
     return Scaffold(
       //TEXTO E CABEÇALHO TOPO DA TELA
       appBar: AppBar(
@@ -54,10 +57,8 @@ class _CadastroScreenState extends State<CadastroScreen> {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.pink.shade50,
-                      backgroundImage: _fotoPath != null 
-                          ? _buildImageProvider(_fotoPath!)
-                          : null,
-                      child: _fotoPath == null 
+                      backgroundImage: imageProvider,
+                      child: imageProvider == null 
                         ? const Icon(Icons.camera_alt, size: 40, color: Colors.pink) 
                         : null,
                     ),
