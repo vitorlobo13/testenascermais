@@ -39,8 +39,53 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final provider = GestantesStateScope.of(context);
-    final gestantes = provider.gestantes;
 
+    if (provider.isLoading) {
+      return Scaffold(
+        backgroundColor: Colors.pink,
+        body: Container(
+          color: Colors.pink,
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                // Logo centralizada
+                Center(
+                  child: Image.asset(
+                    'assets/images/nascermaisicon.png',
+                    width: 180,
+                    height: 180,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                // Indicador de carregamento
+                const CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+                const Spacer(),
+                // Frase desenvolvida com carinho
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 24.0, left: 16.0, right: 16.0),
+                  child: Text(
+                    'Desenvolvido com ❤️ para quem vive o nascer',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    final gestantes = provider.gestantes;
     final query = _buscaController.text;
     final bool mostrarArquivadas = _tabController.index == 1;
 
@@ -184,6 +229,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                               height: 50,
                                               fit: BoxFit.cover,
                                               errorBuilder: (context, error, stackTrace) {
+                                                debugPrint("Erro ao carregar imagem no HomeScreen (${g.nome}): $error");
                                                 return Text(
                                                   g.nome[0].toUpperCase(),
                                                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
@@ -205,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                     children: [
                                       const SizedBox(height: 4),
                                       Text(
-                                        isArquivada ? 'Registro Arquivado' : g.semanasHoje, 
+                                        g.semanasHoje, 
                                         style: TextStyle(color: subtextColor, fontWeight: FontWeight.w500)
                                       ),
                                       Text(

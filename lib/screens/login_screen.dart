@@ -192,11 +192,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            // Ícone/Logomarca
-                            const Icon(
-                              Icons.auto_awesome,
-                              size: 50,
-                              color: Colors.pink,
+                            Image.asset(
+                              'assets/images/nascermaisicon_login.png',
+                              width: 200,  // Define a largura (substituindo o size do Icon)
+                              height: 200, // Define a altura
+                              fit: BoxFit.contain, // Garante que a imagem mude de tamanho sem distorcer
                             ),
                             const SizedBox(height: 12),
                             Text(
