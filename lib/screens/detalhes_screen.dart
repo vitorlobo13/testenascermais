@@ -122,6 +122,7 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
                           height: 80,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
+                            debugPrint("Erro ao carregar imagem no DetalhesScreen (${widget.gestante.nome}): $error");
                             return const Icon(Icons.person, size: 40, color: Colors.pink);
                           },
                         )
@@ -160,11 +161,15 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
               ],
             ),
           ),
-          
-          //EXIBINDO OS CARTÕES/FICHA DA GESTANTE
+          //EXIBINDO OS CARTÕES/FICHA DA GESTANTE DE FORMA REORDENÁVEL
           Expanded(
-            child: ListView.builder(
+            child: ReorderableListView.builder(
+              buildDefaultDragHandles: false,
               itemCount: widget.gestante.ficha.length,
+              onReorder: (int oldIndex, int newIndex) async {
+                await _fichaService.reordenarCartoes(widget.gestante, oldIndex, newIndex);
+                _atualizar();
+              },
               itemBuilder: (context, index) {
                 final cartao = widget.gestante.ficha[index];
 
@@ -197,13 +202,15 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
                     final titulo = cartao.titulo;
                     await _fichaService.excluirCartao(widget.gestante, index);
                     if (!mounted) return;
-                    setState(() {});
+                    _atualizar();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Cartão '$titulo' excluído")),
                     );
                   },
-                  child: Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ReorderableDelayedDragStartListener(
+                    index: index,
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     child: ExpansionTile(
                       leading: Checkbox(
@@ -265,8 +272,9 @@ class _DetalhesGestanteScreenState extends State<DetalhesGestanteScreen> {
                       ],
                     ),
                   ),
-                );
-              },
+                ),
+              );
+            },
             ),
           ),
         ],
